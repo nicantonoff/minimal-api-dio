@@ -11,7 +11,6 @@ public class VeiculoTest
         // Arrange
         var veiculo = new Veiculo
         {
-            // Act
             Id = 1,
             Nome = "Marea",
             Marca = "Fiat",

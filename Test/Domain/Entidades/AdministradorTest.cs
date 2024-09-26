@@ -11,7 +11,6 @@ public class AdministradorTest
         // Arrange
         var adm = new Administrador
         {
-            // Act
             Id = 1,
             Email = "teste@teste.com",
             Senha = "teste",
