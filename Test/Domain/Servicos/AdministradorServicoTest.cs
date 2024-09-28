@@ -1,5 +1,4 @@
 using System.Reflection;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MinimalApi.Dominio.Entidades;
@@ -14,15 +13,15 @@ public class AdministradorServicoTest
     private DbContexto CriarContextoDeTeste()
     {
         var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        var path = Path.GetFullPath(Path.Combine(assemblyPath ?? "", "..", "..",".."));
-        
+        var path = Path.GetFullPath(Path.Combine(assemblyPath ?? "", "..", "..", ".."));
+
         var builder = new ConfigurationBuilder()
             .SetBasePath(path ?? Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .AddEnvironmentVariables();
-        
+
         var configuration = builder.Build();
-        
+
         return new DbContexto(configuration);
     }
 
@@ -39,7 +38,7 @@ public class AdministradorServicoTest
             Senha = "teste",
             Perfil = "Adm"
         };
-        
+
         var administradorServico = new AdministradorServico(context);
 
         // Act
@@ -62,7 +61,7 @@ public class AdministradorServicoTest
             Senha = "teste",
             Perfil = "Adm"
         };
-        
+
         var administradorServico = new AdministradorServico(context);
 
         // Act
@@ -70,6 +69,6 @@ public class AdministradorServicoTest
         var admDoBanco = administradorServico.BuscaPorId(adm.Id);
 
         // Assert
-        Assert.AreEqual(1, admDoBanco.Id);
+        Assert.AreEqual(1, admDoBanco?.Id);
     }
 }
