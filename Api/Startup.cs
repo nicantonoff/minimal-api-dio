@@ -79,6 +79,17 @@ public class Startup
             );
         });
 
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+        });
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -90,6 +101,8 @@ public class Startup
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseCors();
 
         app.UseEndpoints(endpoints => {
             
@@ -220,7 +233,6 @@ public class Startup
             }
 
             endpoints.MapPost("/veiculos", ([FromBody] VeiculoDTO veiculoDTO, IVeiculoServico veiculoServico) => {
-
                 var validacao = validaDTO(veiculoDTO);
                 if(validacao.Mensagens.Count > 0)
                     return Results.BadRequest(validacao);
@@ -254,7 +266,6 @@ public class Startup
             }).RequireAuthorization().WithTags("Veículos");
 
             endpoints.MapPut("/veiculos/{id}", ([FromRoute] int id, VeiculoDTO veiculoDTO,IVeiculoServico veiculoServico) => {
-                
                 var veiculo = veiculoServico.BuscaPorId(id);
                 if(veiculo == null) return Results.NotFound();
 
@@ -288,5 +299,4 @@ public class Startup
             #endregion
         });
     }
-
 }
